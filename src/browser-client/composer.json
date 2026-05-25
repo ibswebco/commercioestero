@@ -1,0 +1,30 @@
+{
+  "name": "ibswebco/ce-browser-client",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "symfony/browser-kit": "^8.0",
+    "symfony/http-client": "^8.0",
+    "symfony/mime": "^8.0",
+    "symfony/css-selector": "^8.0",
+    "ibswebco/commercioestero": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "IBSWebCO\\CommercioEstero\\BrowserClient\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "pestphp/pest": "^4.7"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}

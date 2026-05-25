@@ -1,0 +1,22 @@
+{
+    "name": "ibswebco/commercioestero",
+    "description": "Client per interfaccia con servizi CommercioEstero",
+    "type": "library",
+    "version": "1.0.0",
+    "require": {
+        "guzzlehttp/guzzle": "^7.10"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "IBSWebCO\\CommercioEstero\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ibswebco",
+            "email": "m.simonetti@ibs.ve.it"
+        }
+    ],
+    "minimum-stability": "dev"
+}
