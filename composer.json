@@ -9,12 +9,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "IBSWebCO\\CommercioEstero\\": "src/"
+            "IBSWebCO\\CommercioEstero\\": "src"
         }
     },
     "authors": [
         {
-            "name": "ibswebco",
+            "name": "Marco Simonetti",
             "email": "m.simonetti@ibs.ve.it"
         }
     ],

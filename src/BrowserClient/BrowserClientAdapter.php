@@ -11,6 +11,7 @@ use IBSWebCO\CommercioEstero\Enums\TipoPratica;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 
+
 class BrowserClientAdapter implements CeClientAdapter
 {
     protected Client $client;
@@ -44,11 +45,6 @@ class BrowserClientAdapter implements CeClientAdapter
         $this->client = new Client();
 
         $this->browser = new HttpBrowser(HttpClient::create());
-    }
-
-    public function __destruct()
-    {
-        $this->logout();
     }
 
     /**
