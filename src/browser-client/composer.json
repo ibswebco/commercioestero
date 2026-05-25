@@ -11,20 +11,7 @@
   },
   "autoload": {
     "psr-4": {
-      "IBSWebCO\\CommercioEstero\\BrowserClient\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  },
-  "require-dev": {
-    "pestphp/pest": "^4.7"
-  },
-  "config": {
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
+      "IBSWebCO\\CommercioEstero\\BrowserClient\\": ""
     }
   }
 }
