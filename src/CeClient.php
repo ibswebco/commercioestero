@@ -12,9 +12,9 @@ class CeClient
         private CeClientAdapter $adapter,
     ) { }
 
-    public function login(string $username, string $password)
+    public function login(string $username, string $password): void
     {
-        return $this->adapter->login(
+        $this->adapter->login(
             username: $username,
             password: $password,
         );
@@ -22,7 +22,7 @@ class CeClient
 
     public function logout(): string
     {
-        return $this->logout();
+        return $this->adapter->logout();
     }
 
     public function tipoPratica(): array|string

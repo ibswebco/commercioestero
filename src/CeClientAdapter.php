@@ -6,9 +6,9 @@ use IBSWebCO\CommercioEstero\Enums\TipoPratica;
 
 interface CeClientAdapter
 {
-    public function login(string $username, string $password);
+    public function login(string $username, string $password): void;
 
-    public function logout();
+    public function logout(): string;
 
     public function tipoPratica();
 

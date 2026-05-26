@@ -36,11 +36,12 @@ class BrowserClientAdapter implements CeClientAdapter
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0',
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
-
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
     ];
 
-    public function __construct()
+    public function __construct(
+        private bool $debug = false,
+    )
     {
         $this->client = new Client();
 
@@ -156,7 +157,7 @@ class BrowserClientAdapter implements CeClientAdapter
     public function logout(): string
     {
         $logoutResponse = $this->client->get(
-            uri: 'https://login.infocamere.it/eacologin/logout.action',
+            uri: 'https://login.infocamere.it/eacologin/logout.action?fw=false',
             options: [
                 'cookies' => $this->guzzleCookieJar,
             ]
@@ -410,7 +411,7 @@ class BrowserClientAdapter implements CeClientAdapter
      * 
      * @throws \IBSWebCO\CommercioEstero\BrowserClient\Exceptions\BrowserClientException
      */
-    private function callPrivateApi(string $method, string $uriPart, ?array $data = null, bool $debug = false): array|string
+    private function callPrivateApi(string $method, string $uriPart, ?array $data = null): array|string
     {
         $k = array_rand($this->userAgents, 1);
 
@@ -429,7 +430,7 @@ class BrowserClientAdapter implements CeClientAdapter
                     'cookies' => $this->guzzleCookieJar,
                     //'json' => $data,
                     'body' => base64_encode(json_encode($data)),
-                    'debug' => $debug,
+                    'debug' => $this->debug,
                 ],
             );
 
