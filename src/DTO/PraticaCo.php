@@ -9,11 +9,12 @@ use IBSWebCO\CommercioEstero\DTO\Co\Speditore;
 use IBSWebCO\CommercioEstero\DTO\Ente\CameraCommercio;
 use IBSWebCO\CommercioEstero\DTO\Ente\Sede;
 use IBSWebCO\CommercioEstero\DTO\Firmatario;
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
 use IBSWebCO\CommercioEstero\DTO\SoggettoRichiedente;
 use IBSWebCO\CommercioEstero\DTO\UtenteRichiedente;
 use IBSWebCO\CommercioEstero\Enums\TipoPagamento;
 
-final class PraticaCo
+final class PraticaCo implements DataObject
 {
     public function __construct (
         public readonly Destinatario $destinatario,

@@ -4,11 +4,12 @@ namespace IBSWebCO\CommercioEstero\DTO;
 
 use IBSWebCO\CommercioEstero\DTO\Ente\CameraCommercio;
 use IBSWebCO\CommercioEstero\DTO\Ente\Sede;
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
 use IBSWebCO\CommercioEstero\Enums\TipoConsegna;
 use IBSWebCO\CommercioEstero\Enums\TipoPagamento;
 use IBSWebCO\CommercioEstero\Enums\TipoSupporto;
 
-final class PraticaVa
+final class PraticaVa implements DataObject
 {
     public function __construct(
         public readonly array $certificati,

@@ -2,9 +2,10 @@
 
 namespace IBSWebCO\CommercioEstero\DTO;
 
-use IBSWebCO\CommercioEstero\Enums\Firmatario\Ruolo;
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+use IBSWebCO\CommercioEstero\Enums\Ruolo;
 
-final class SoggettoRichiedente
+final class SoggettoRichiedente implements DataObject
 {
     public function __construct(
         public readonly string $cap,

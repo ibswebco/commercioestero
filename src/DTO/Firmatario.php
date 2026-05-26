@@ -2,10 +2,11 @@
 
 namespace IBSWebCO\CommercioEstero\DTO;
 
-use IBSWebCO\CommercioEstero\Enums\Firmatario\Ruolo;
-use IBSWebCO\CommercioEstero\Enums\Firmatario\Tipo;
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+use IBSWebCO\CommercioEstero\Enums\Ruolo;
+use IBSWebCO\CommercioEstero\Enums\SoggettoFirmatario;
 
-final class Firmatario
+final class Firmatario implements DataObject
 {
     public function __construct(
         public readonly bool $checkRuolo,
@@ -16,7 +17,7 @@ final class Firmatario
         public readonly string $nome,
         public readonly bool $registroImprese,
         public readonly ?Ruolo $ruolo,
-        public readonly ?Tipo $tipoFirmatario,
+        public readonly ?SoggettoFirmatario $tipoFirmatario,
         public readonly bool $validate, 
     )
     { }

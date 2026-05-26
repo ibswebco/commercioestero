@@ -2,7 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero\DTO\Ente;
 
-final class Sede
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+
+final class Sede implements DataObject
 {
     public function __construct(
         public readonly string $descrizione,

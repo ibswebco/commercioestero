@@ -2,10 +2,11 @@
 
 namespace IBSWebCO\CommercioEstero\DTO\Co;
 
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
 use IBSWebCO\CommercioEstero\Enums\TipoConsegna;
 use IBSWebCO\CommercioEstero\Enums\TipoSupporto;
 
-final class OpzioniCertificato
+final class OpzioniCertificato implements DataObject
 {
     public function __construct(
         public readonly int $autentiche,

@@ -2,7 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero\DTO;
 
-final class UtenteRichiedente
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+
+final class UtenteRichiedente implements DataObject
 {
     public function __construct(
         public readonly string $accountId,

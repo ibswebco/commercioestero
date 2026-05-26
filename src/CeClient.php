@@ -61,7 +61,17 @@ class CeClient
         );
     }
 
-    public function inserisciPratica(array $datiPratica, TipoPratica $tipoPratica): array|string
+    public function speditori(): array|string
+    {
+        return $this->adapter->speditori();
+    }
+
+    public function firmatari()
+    {
+        return $this->adapter->firmatari();
+    }
+
+    public function inserisciPratica(array $datiPratica, string $tipoPratica): array|string
     {
         return $this->adapter->inserisciPratica(
             datiPratica: $datiPratica,
@@ -69,7 +79,7 @@ class CeClient
         );
     }
 
-    public function modificaPratica(array $datiPratica, string $codicePratica, TipoPratica $tipoPratica): array|string
+    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica): array|string
     {
         return $this->adapter->modificaPratica(
             datiPratica: $datiPratica,

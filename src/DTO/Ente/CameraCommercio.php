@@ -2,7 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero\DTO\Ente;
 
-final class CameraCommercio
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+
+final class CameraCommercio implements DataObject
 {
     public function __construct(
         public readonly string $cciaaMaster,

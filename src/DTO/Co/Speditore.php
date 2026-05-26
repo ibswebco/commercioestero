@@ -2,7 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero\DTO\Co;
 
-final class Speditore
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+
+final class Speditore implements DataObject
 {
     public function __construct(
         public readonly ?array $delega,

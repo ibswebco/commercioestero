@@ -7,7 +7,6 @@ use GuzzleHttp\Cookie\CookieJar as GuzzleHttpCookieJar;
 use IBSWebCO\CommercioEstero\BrowserClient\Exceptions\BrowserClientException;
 use IBSWebCO\CommercioEstero\BrowserClient\Exceptions\LoginException;
 use IBSWebCO\CommercioEstero\CeClientAdapter;
-use IBSWebCO\CommercioEstero\Enums\TipoPratica;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -157,7 +156,7 @@ class BrowserClientAdapter implements CeClientAdapter
     public function logout(): string
     {
         $logoutResponse = $this->client->get(
-            uri: 'https://login.infocamere.it/eacologin/logout.action?fw=false',
+            uri: 'https://login.infocamere.it/eacologin/logout.action?fw=false&cp=0&nocache=8da314fb-5d78-435e-a7f9-b81692453989',
             options: [
                 'cookies' => $this->guzzleCookieJar,
             ]
@@ -335,6 +334,11 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
+    public function firmatari()
+    {
+        throw new \Exception('Not implemented');
+    }
+
     /**
      * Dettgali pratica
      * 
@@ -358,7 +362,7 @@ class BrowserClientAdapter implements CeClientAdapter
      * 
      * @throws \IBSWebCO\CommercioEstero\BrowserClient\Exceptions\BrowserClientException
      */
-    public function inserisciPratica(array $datiPratica, TipoPratica $tipoPratica = TipoPratica::CO): array|string
+    public function inserisciPratica(array $datiPratica, string $tipoPratica = 'co'): array|string
     {
         return $this->callPrivateApi(
             method: 'post',
@@ -376,7 +380,7 @@ class BrowserClientAdapter implements CeClientAdapter
      * 
      * @return array|string
      */
-    public function modificaPratica(array $datiPratica, string $codicePratica, TipoPratica $tipoPratica = TipoPratica::CO): array|string
+    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica = 'co'): array|string
     {
         return $this->callPrivateApi(
             method: 'put',

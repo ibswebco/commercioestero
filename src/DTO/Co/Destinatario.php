@@ -2,7 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero\DTO\Co;
 
-final class Destinatario
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+
+final class Destinatario implements DataObject
 {
     public function __construct(
         public readonly ?string $denominazione,

@@ -2,8 +2,6 @@
 
 namespace IBSWebCO\CommercioEstero;
 
-use IBSWebCO\CommercioEstero\Enums\TipoPratica;
-
 interface CeClientAdapter
 {
     public function login(string $username, string $password): void;
@@ -24,9 +22,13 @@ interface CeClientAdapter
 
     public function province();
 
-    public function inserisciPratica(array $datiPratica, TipoPratica $tipoPratica = TipoPratica::CO);
+    public function speditori();
 
-    public function modificaPratica(array $datiPratica, string $codicePratica, TipoPratica $tipoPratica = TipoPratica::CO);
+    public function firmatari();
+
+    public function inserisciPratica(array $datiPratica, string $tipoPratica = 'co');
+
+    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica = 'co');
 
     public function utente(bool $full = false);
 
