@@ -8,29 +8,33 @@ interface CeClientAdapter
 
     public function logout(): string;
 
-    public function tipoPratica();
+    public function tipoPratica(): array|string;
 
     public function tipiFileAllegati(string $tipoPratica);
 
-    public function saldo();
+    public function saldo(): array|string;
 
-    public function elencoPaesi();
+    public function elencoPaesi(): array|string;
 
-    public function elencoCciaa(string $tipoPratica);
+    public function elencoCciaa(string $codicePratica): array|string;
 
-    public function elencoSedi(string $codiceEnte);
+    public function elencoSedi(string $codiceEnte): array|string;
 
-    public function province();
+    public function province(): array|string;
 
-    public function speditori();
+    public function speditori(): array|string;
 
-    public function firmatari();
+    public function firmatari(): array|string;
 
-    public function inserisciPratica(array $datiPratica, string $tipoPratica = 'co');
+    public function legaleRappresentante(array $datiLegaleRappresentante): array|string;
 
-    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica = 'co');
+    public function inserisciPratica(array $datiPratica, string $tipoPratica = 'co'): array|string;
 
-    public function utente(bool $full = false);
+    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica = 'co'): array|string;
 
-    public function downloadDistinta(string $codicePratica);
+    public function inserisciAllegato(array $datiAllegato, string $codiceRichiesta, string $tipoDocumento, string $tipoPratica = 'co'): string|array;
+
+    public function utente(bool $full = false): array|string;
+
+    public function downloadDistinta(string $codicePratica): array|string;
 }

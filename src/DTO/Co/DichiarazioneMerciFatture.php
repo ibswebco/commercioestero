@@ -24,4 +24,12 @@ final class DichiarazioneMerciFatture implements DataObject
             'tipologia' => '',
         ];
     }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            denominazione: $data['denominazione'] ?? null,
+            quantita: $data['quantita'] ?? null,
+        );
+    }
 }

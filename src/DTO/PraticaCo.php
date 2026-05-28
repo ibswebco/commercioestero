@@ -29,13 +29,13 @@ final class PraticaCo implements DataObject
         public readonly OpzioniCertificato $opzioniCertificato,
         public readonly array $origineExtraUe,
         public readonly array $origineUe,
-        public readonly string $osservazioni,
+        public readonly ?string $osservazioni,
         public readonly Sede $sede,
         //public readonly Tipo $selezionaFirmatario,
         public readonly SoggettoRichiedente $soggettoRichiedente,
         public readonly Speditore $speditore,
         public readonly TipoPagamento $tipoPagamento,
-        public readonly string $trasporto,
+        public readonly ?string $trasporto,
         public readonly UtenteRichiedente $utenteRichiedente,    
     )
     { }
@@ -69,5 +69,29 @@ final class PraticaCo implements DataObject
             'valuta' => 'EUR',
             'importoRichiesta' => 0.0,
         ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            destinatario: $data['destinatario'],
+            dichiarazioneMerciFatture: $data['dichiarazioneMerciFatture'],
+            ente: $data['ente'],
+            evasioneAutomatica: $data['evasioneAutomatica'],
+            fatturatoTotale: $data['datturatoTotale'],
+            firmatario: $data['firmatario'],
+            gicenzaMerci: $data['giacenzaMerci'],
+            note: $data['note'],
+            opzioniCertificato: $data['opzioniCertificato'],
+            origineExtraUe: $data['origineExtraUe'],
+            origineUe: $data['origineUe'],
+            osservazioni: $data['osservazioni'] ?? null,
+            sede: $data['sede'],
+            soggettoRichiedente: $data['soggettoRichiedente'],
+            speditore: $data['speditore'],
+            tipoPagamento: $data['tipoPagamento'],
+            trasporto: $data['trasporto'] ?? null,
+            utenteRichiedente: $data['utenteRichiedente'],
+        );
     }
 }

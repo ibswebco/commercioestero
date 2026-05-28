@@ -19,4 +19,12 @@ final class Sede implements DataObject
             'progressivo' => $this->progressivo,
         ];    
     }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            descrizione: $data['descrizione'],
+            progressivo: $data['progressivo'],
+        );
+    }
 }

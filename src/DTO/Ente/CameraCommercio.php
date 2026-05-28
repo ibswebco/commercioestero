@@ -23,4 +23,14 @@ final class CameraCommercio implements DataObject
             'denominazione' => $this->denominazione,
         ];
     }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            cciaaMaster: $data['cciaaMaster'],
+            codAooProt: $data['codAooProt'],
+            codiceEnte: $data['codiceEnte'],
+            denominazione: $data['denominazione'],
+        );
+    }
 }

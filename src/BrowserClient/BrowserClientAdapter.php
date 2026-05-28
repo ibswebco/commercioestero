@@ -334,7 +334,16 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
-    public function firmatari()
+    public function legaleRappresentante(array $datiLegaleRappresentante): array|string
+    {
+        return $this->callPrivateApi(
+            method: 'post',
+            uriPart: 'foegWeb/private/registroimprese/legaleRappresentante',
+            data: $datiLegaleRappresentante,
+        );
+    }
+
+    public function firmatari(): array|string
     {
         throw new \Exception('Not implemented');
     }
@@ -389,6 +398,15 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
+    public function inserisciAllegato(array $datiAllegato, string $codiceRichiesta, string $tipoDocumento, string $tipoPratica = 'co'): string|array
+    {
+        return $this->callPrivateApi(
+            method: 'post',
+            uriPart: 'foegWeb/private/file?tipoRichiesta='.strtoupper($tipoPratica).'&codiceRichiesta='.$codiceRichiesta.'&tipoDocumento='.$tipoDocumento,
+            data: $datiAllegato,
+        );
+    }
+
     /**
      * Download della distinta (ex xml) della richiesta per firma digitale
      * 
@@ -396,7 +414,7 @@ class BrowserClientAdapter implements CeClientAdapter
      * 
      * @return array|string
      */
-    public function downloadDistinta(string $codicePratica)
+    public function downloadDistinta(string $codicePratica): array|string
     {
         return $this->callPrivateApi(
             method: 'get',

@@ -47,10 +47,10 @@ class CeClient
         return $this->adapter->elencoPaesi();
     }
 
-    public function elencoCciaa(string $tipoPratica): array|string
+    public function elencoCciaa(string $codicePratica): array|string
     {
         return $this->adapter->elencoCciaa(
-            tipoPratica: $tipoPratica,
+            codicePratica: $codicePratica,
         );
     }
 
@@ -64,6 +64,13 @@ class CeClient
     public function speditori(): array|string
     {
         return $this->adapter->speditori();
+    }
+
+    public function legaleRappresentante(array $datiLegaleRappresentante)
+    {
+        return $this->adapter->legaleRappresentante(
+            datiLegaleRappresentante: $datiLegaleRappresentante,
+        );
     }
 
     public function firmatari()

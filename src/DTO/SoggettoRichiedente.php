@@ -44,4 +44,22 @@ final class SoggettoRichiedente implements DataObject
             ]
         ];
     }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            cap: $data['cap'],
+            codiceFiscale: $data['codiceFiscale'],
+            comune: $data['comune'],
+            denominazione: $data['denominazione'],
+            indirizzo: $data['indirizzo'],
+            numeroRea: $data['numeroRea'],
+            partitaIva: $data['partitaIva'],
+            provincia: $data['provincia'],
+            registroImprese: $data['registroImprese'],
+            registroImpreseSiglaProvincia: $data['registroImpreseSiglaProvincia'],
+            ruolo: $data['ruolo'],
+            sedeLegale: $data['sedeLegale'],
+        );
+    }
 }

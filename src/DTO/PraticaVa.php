@@ -21,7 +21,7 @@ final class PraticaVa implements DataObject
         public readonly CameraCommercio $ente,
         public readonly Sede $sede,
         public readonly Firmatario $firmatario,
-        public readonly string $note,
+        public readonly ?string $note,
         public readonly SoggettoRichiedente $soggettoRichiedente,
         public readonly TipoConsegna $tipoConsegna,
         public readonly TipoPagamento $tipoPagamento,
@@ -44,7 +44,7 @@ final class PraticaVa implements DataObject
             'firmatario' => $this->firmatario->toArray(),
             'linguaDocumentoSintesi' => 'it',
             'linguaPortale' => 'it',
-            'note' => $this->note,
+            'note' => $this->note ?? '',
             'sede' => $this->sede->toArray(),
             'soggettoRichiedente' => $this->soggettoRichiedente->toArray(),
             'tipoConsegna' => $this->tipoConsegna,
@@ -53,5 +53,27 @@ final class PraticaVa implements DataObject
             'urgente' => $this->urgente,
             'utenteRichiedente' => $this->utenteRichiedente->toArray(),
         ]; 
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            certificati: $data['certificati'],
+            certificazioniAllegati: $data['certificazioniAllegati'],
+            consegnaDomicilio: $data['consegnaDomicilio'] ?? false,
+            consegnaSportello: $data['consegnaSportello'] ?? false,
+            consegnaStampaAzienda: $data['consegnaStampaAzienda'] ?? true,
+            delega: $data['delega'],
+            ente: $data['ente'],
+            sede: $data['sede'],
+            firmatario: $data['firmatario'],
+            note: $data['note'] ?? null,
+            soggettoRichiedente: $data['soggettoRichiedente'],
+            tipoConsegna: $data['tipoConsegna'],
+            tipoPagamento: $data['tipoPagamento'],
+            tipoSupporto: $data['tipoSupporto'],
+            urgente: $data['urgente'] ?? false,
+            utenteRichiedente: $data['utenterRichiedente'],
+        );
     }
 }
