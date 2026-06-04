@@ -3,6 +3,7 @@
 namespace IBSWebCO\CommercioEstero\DTO;
 
 use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+use IBSWebCO\CommercioEstero\Enums\SoggettoFirmatario;
 
 final class Firmatario implements DataObject
 {
@@ -40,15 +41,15 @@ final class Firmatario implements DataObject
     {
         return new self(
             checkRuolo: $data['checkRuolo'] ?? false,
-            codiceFiscale: $data['codiceFiscale'],
-            cognome: $data['cognome'],
+            codiceFiscale: $data['codiceFiscale'] ?? '',
+            cognome: $data['cognome'] ?? '',
             documentoCarica: $data['documentoCarica'] ?? null,
-            enabled: $data['enabled'],
-            nome: $data['nome'],
-            registroImprese: $data['registroImprese'],
-            ruolo: $data['ruolo'],
-            tipoFirmatario: $data['tipoFirmatario'],
-            validate: $data['validate'],
+            enabled: $data['enabled'] ?? false,
+            nome: $data['nome'] ?? '',
+            registroImprese: $data['registroImprese'] ?? false,
+            ruolo: $data['ruolo'] ?? '',
+            tipoFirmatario: $data['tipoFirmatario'] ?? SoggettoFirmatario::SOGGETTO_FIRMATARIO,
+            validate: $data['validate'] ?? false,
         );
     }
 }

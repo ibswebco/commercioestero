@@ -58,22 +58,22 @@ final class PraticaVa implements DataObject
     public static function fromArray(array $data): self
     {
         return new self(
-            certificati: $data['certificati'],
-            certificazioniAllegati: $data['certificazioniAllegati'],
+            certificati: $data['certificati'] ?? [],
+            certificazioniAllegati: $data['certificazioniAllegati'] ?? [],
             consegnaDomicilio: $data['consegnaDomicilio'] ?? false,
             consegnaSportello: $data['consegnaSportello'] ?? false,
             consegnaStampaAzienda: $data['consegnaStampaAzienda'] ?? true,
-            delega: $data['delega'],
+            delega: $data['delega'] ?? [],
             ente: $data['ente'],
             sede: $data['sede'],
-            firmatario: $data['firmatario'],
+            firmatario: $data['firmatario'] ?? [],
             note: $data['note'] ?? null,
-            soggettoRichiedente: $data['soggettoRichiedente'],
-            tipoConsegna: $data['tipoConsegna'],
-            tipoPagamento: $data['tipoPagamento'],
-            tipoSupporto: $data['tipoSupporto'],
+            soggettoRichiedente: $data['soggettoRichiedente'] ?? [],
+            tipoConsegna: $data['tipoConsegna'] ?? TipoConsegna::STAMPA_AZIENDA,
+            tipoPagamento: $data['tipoPagamento'] ?? TipoPagamento::TELEMACO,
+            tipoSupporto: $data['tipoSupporto'] ?? TipoSupporto::FOLGIO_BIANCO,
             urgente: $data['urgente'] ?? false,
-            utenteRichiedente: $data['utenterRichiedente'],
+            utenteRichiedente: $data['utenterRichiedente'] ?? [],
         );
     }
 }

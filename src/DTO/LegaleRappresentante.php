@@ -29,11 +29,11 @@ final class LegaleRappresentante implements DataObject
     public static function fromArray(array $data): self
     {
         return new self(
-            codiceFiscaleImpresa: $data['codiceFiscaleImpresa'],
-            codiceFiscaleLegaleRappresentante: $data['codiceFiscaleLegaleRappresentante'],
-            cognomeLegaleRappresentante: $data['cognom,eLegaleRappresentante'],
-            nomeLegaleRappresentante: $data['nomeLegaleRappresentante'],
-            tipoFirmatario: $data['tipoFirmatario'],
+            codiceFiscaleImpresa: $data['impreseLegaleRappresentante'][0]['codiceFiscale'],
+            codiceFiscaleLegaleRappresentante: $data['codiceFiscale'],
+            cognomeLegaleRappresentante: $data['cognome'],
+            nomeLegaleRappresentante: $data['nome'],
+            tipoFirmatario: $data['tipoFirmatario'] ?? '',
         );
     }
 }

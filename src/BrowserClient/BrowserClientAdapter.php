@@ -156,7 +156,7 @@ class BrowserClientAdapter implements CeClientAdapter
     public function logout(): string
     {
         $logoutResponse = $this->client->get(
-            uri: 'https://login.infocamere.it/eacologin/logout.action?fw=false&cp=0&nocache=8da314fb-5d78-435e-a7f9-b81692453989',
+            uri: 'https://login.infocamere.it/eacologin/logout.action?fw=false&cp=0',
             options: [
                 'cookies' => $this->guzzleCookieJar,
             ]

@@ -27,7 +27,7 @@ final class SoggettoRichiedente implements DataObject
     {
         return [
             //'cap' => $this->cap,
-            'codiceFiscale' => strtoupper($this->codiceFiscale),
+            'codiceFiscale' => $this->codiceFiscale,
             //'coumne' => strtoupper($this->comune),
             'denominazione' => $this->denominazione,
             //'impresaEstera' => false,
@@ -48,18 +48,18 @@ final class SoggettoRichiedente implements DataObject
     public static function fromArray(array $data): self
     {
         return new self(
-            cap: $data['cap'],
-            codiceFiscale: $data['codiceFiscale'],
-            comune: $data['comune'],
-            denominazione: $data['denominazione'],
-            indirizzo: $data['indirizzo'],
-            numeroRea: $data['numeroRea'],
-            partitaIva: $data['partitaIva'],
-            provincia: $data['provincia'],
-            registroImprese: $data['registroImprese'],
-            registroImpreseSiglaProvincia: $data['registroImpreseSiglaProvincia'],
-            ruolo: $data['ruolo'],
-            sedeLegale: $data['sedeLegale'],
+            cap: $data['cap'] ?? '',
+            codiceFiscale: $data['codiceFiscale'] ?? '',
+            comune: $data['comune'] ?? '',
+            denominazione: $data['denominazione'] ?? '',
+            indirizzo: $data['indirizzo'] ?? '',
+            numeroRea: $data['numeroRea'] ?? '',
+            partitaIva: $data['partitaIva'] ?? '',
+            provincia: $data['provincia'] ?? '',
+            registroImprese: $data['registroImprese'] ?? false,
+            registroImpreseSiglaProvincia: $data['registroImpreseSiglaProvincia'] ?? '',
+            ruolo: Ruolo::from($data['ruolo']) ?? Ruolo::PERSONA_FISICA,
+            sedeLegale: $data['sedeLegale'] ?? '',
         );
     }
 }

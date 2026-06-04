@@ -33,8 +33,8 @@ final class OpzioniCertificato implements DataObject
             'copie' => 1,
             'legalizzazioneCertificato' => $this->legalizzazioneCertificato,
             'proforma' => $this->proforma,
-            'tipoConsegna' => $this->tipoConsegna ?? '',
-            'tipoSupporto' => $this->tipoSupporto ?? '',
+            'tipoConsegna' => $this->tipoConsegna ?? null,
+            'tipoSupporto' => $this->tipoSupporto ?? null,
             'urgente' => $this->urgente,
         ];
     }
@@ -43,13 +43,13 @@ final class OpzioniCertificato implements DataObject
     public static function fromArray(array $data): self
     {
         return new self(
-            autentiche: $data['autentiche'],
-            copie: $data['copie'],
-            legalizzazioneCertificato: $data['legalizzazioneCertificato'],
-            proforma: $data['proforma'],
+            autentiche: $data['autentiche'] ?? 0,
+            copie: $data['copie'] ?? 1,
+            legalizzazioneCertificato: $data['legalizzazioneCertificato'] ?? false,
+            proforma: $data['proforma'] ?? false,
             tipoConsegna: $data['tipoConsegna'] ?? null,
             tipoSupporto: $data['tipoSupporto'] ?? null,
-            urgente: $data['urgente'],
+            urgente: $data['urgente'] ?? false,
         );
     }
 }

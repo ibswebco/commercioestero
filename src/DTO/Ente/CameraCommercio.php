@@ -28,9 +28,9 @@ final class CameraCommercio implements DataObject
     {
         return new self(
             cciaaMaster: $data['cciaaMaster'],
-            codAooProt: $data['codAooProt'],
+            codAooProt: $data['codiceAoo'],
             codiceEnte: $data['codiceEnte'],
-            denominazione: $data['denominazione'],
+            denominazione: $data['descrizione'],
         );
     }
 }

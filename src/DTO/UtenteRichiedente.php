@@ -31,12 +31,12 @@ final class UtenteRichiedente implements DataObject
     public static function fromArray(array $data): self
     {
         return new self(
-            accountId: $data['accountId'],
-            codiceFiscale: $data['codicFiscale'],
-            cognome: $data['cognome'],
-            email: $data['email'],
-            nome: $data['nome'],
-            userId: $data['userId'],
+            accountId: $data['accountId'] ?? '',
+            codiceFiscale: $data['codicFiscale'] ?? '',
+            cognome: $data['cognome'] ?? '',
+            email: $data['email'] ?? '',
+            nome: $data['nome'] ?? '',
+            userId: $data['userId'] ?? '',
         );
     }
 }

@@ -74,24 +74,24 @@ final class PraticaCo implements DataObject
     public static function fromArray(array $data): self
     {
         return new self(
-            destinatario: $data['destinatario'],
-            dichiarazioneMerciFatture: $data['dichiarazioneMerciFatture'],
+            destinatario: $data['destinatario'] ?? Destinatario::fromArray([]),
+            dichiarazioneMerciFatture: $data['dichiarazioneMerciFatture'] ?? DichiarazioneMerciFatture::fromArray([]),
             ente: $data['ente'],
-            evasioneAutomatica: $data['evasioneAutomatica'],
-            fatturatoTotale: $data['datturatoTotale'],
-            firmatario: $data['firmatario'],
-            gicenzaMerci: $data['giacenzaMerci'],
-            note: $data['note'],
-            opzioniCertificato: $data['opzioniCertificato'],
-            origineExtraUe: $data['origineExtraUe'],
-            origineUe: $data['origineUe'],
+            evasioneAutomatica: $data['evasioneAutomatica'] ?? false,
+            fatturatoTotale: $data['datturatoTotale'] ?? 0,
+            firmatario: $data['firmatario'] ?? Firmatario::fromArray([]),
+            gicenzaMerci: $data['giacenzaMerci'] ?? '',
+            note: $data['note'] ?? '',
+            opzioniCertificato: $data['opzioniCertificato'] ?? OpzioniCertificato::fromArray([]),
+            origineExtraUe: $data['origineExtraUe'] ?? [],
+            origineUe: $data['origineUe'] ?? [],
             osservazioni: $data['osservazioni'] ?? null,
             sede: $data['sede'],
-            soggettoRichiedente: $data['soggettoRichiedente'],
-            speditore: $data['speditore'],
-            tipoPagamento: $data['tipoPagamento'],
+            soggettoRichiedente: $data['soggettoRichiedente'] ?? SoggettoRichiedente::fromArray([]),
+            speditore: $data['speditore'] ?? Speditore::fromArray([]),
+            tipoPagamento: $data['tipoPagamento'] ?? TipoPagamento::TELEMACO,
             trasporto: $data['trasporto'] ?? null,
-            utenteRichiedente: $data['utenteRichiedente'],
+            utenteRichiedente: $data['utenteRichiedente'] ?? UtenteRichiedente::fromArray([]),
         );
     }
 }

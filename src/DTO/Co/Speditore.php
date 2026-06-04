@@ -29,7 +29,7 @@ final class Speditore implements DataObject
         return new self(
             delega: $data['delega'] ?? null,
             esporatore: $data['esportatore'] ?? null,
-            ruolo: $data['ruolo'] ?? '',
+            ruolo: $data['ruolo'] ?? 'e',
             spedizioniere: $data['spedizioniere'] ?? null,
         );
     }
