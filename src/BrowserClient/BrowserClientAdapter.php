@@ -91,15 +91,15 @@ class BrowserClientAdapter implements CeClientAdapter
 
         if (str_contains($response, 'completa')) {
             throw new LoginException(
-                message: $response,
-                code: 'AU03',
+                message: $response.' (AU03)',
+                code: 3,
             );
         }
 
         if (str_contains($response, 'scaduta')) {
             throw new LoginException(
-                message: $response,
-                code: 'AU04',
+                message: $response .' (AU04)',
+                code: 4,
             );
         }
         
@@ -111,22 +111,22 @@ class BrowserClientAdapter implements CeClientAdapter
             $this->logout();
 
             throw new LoginException(
-                message: $response,
-                code: 'AU08',
+                message: $response .' (AU08)',
+                code: 8,
             );
         }
 
         if (str_contains($response, 'riuscita')) {
             throw new LoginException(
-                message: $response,
-                code: 'AU01',
+                message: $response .' (AU01)',
+                code: 1,
             );
         }
 
         if (str_contains($response, 'nuova password')) {
             throw new LoginException(
-                message: $response,
-                code: 'AU09',
+                message: $response.' (AU09)',
+                code: 9,
             );
         }
 
