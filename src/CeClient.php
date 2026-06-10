@@ -6,18 +6,18 @@ use IBSWebCO\CommercioEstero\Enums\TipoPratica;
 
 class CeClient
 {
-    protected string $version = '1.0.0';
+    protected string $version = "1.0.1";
 
-    public function __construct(
-        private CeClientAdapter $adapter,
-    ) { }
+    public function __construct(private CeClientAdapter $adapter) {}
+
+    public function versione()
+    {
+        return "v{$this->version}";
+    }
 
     public function login(string $username, string $password): void
     {
-        $this->adapter->login(
-            username: $username,
-            password: $password,
-        );
+        $this->adapter->login(username: $username, password: $password);
     }
 
     public function logout(): string
@@ -32,9 +32,7 @@ class CeClient
 
     public function tipiFileAllegati(string $tipoPratica): array|string
     {
-        return $this->adapter->tipiFileAllegati(
-            tipoPratica: $tipoPratica,
-        );
+        return $this->adapter->tipiFileAllegati(tipoPratica: $tipoPratica);
     }
 
     public function saldo(): array|string
@@ -49,16 +47,12 @@ class CeClient
 
     public function elencoCciaa(string $codicePratica): array|string
     {
-        return $this->adapter->elencoCciaa(
-            codicePratica: $codicePratica,
-        );
+        return $this->adapter->elencoCciaa(codicePratica: $codicePratica);
     }
 
     public function elencoSedi(string $codiceEnte): array|string
     {
-        return $this->adapter->elencoSedi(
-            codiceEnte: $codiceEnte,
-        );
+        return $this->adapter->elencoSedi(codiceEnte: $codiceEnte);
     }
 
     public function speditori(): array|string
@@ -78,16 +72,21 @@ class CeClient
         return $this->adapter->firmatari();
     }
 
-    public function inserisciPratica(array $datiPratica, string $tipoPratica): array|string
-    {
+    public function inserisciPratica(
+        array $datiPratica,
+        string $tipoPratica,
+    ): array|string {
         return $this->adapter->inserisciPratica(
             datiPratica: $datiPratica,
             tipoPratica: $tipoPratica,
         );
     }
 
-    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica): array|string
-    {
+    public function modificaPratica(
+        array $datiPratica,
+        string $codicePratica,
+        string $tipoPratica,
+    ): array|string {
         return $this->adapter->modificaPratica(
             datiPratica: $datiPratica,
             codicePratica: $codicePratica,
@@ -97,15 +96,11 @@ class CeClient
 
     public function downloadDistinta(string $codicePratica): array|string
     {
-        return $this->adapter->downloadDistinta(
-            codicePratica: $codicePratica,
-        );
+        return $this->adapter->downloadDistinta(codicePratica: $codicePratica);
     }
 
     public function utente(bool $full = false): array|string
     {
-        return $this->adapter->utente(
-            full: $full,
-        );
+        return $this->adapter->utente(full: $full);
     }
 }
