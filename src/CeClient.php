@@ -12,9 +12,9 @@ class CeClient
         private CeClientAdapter $adapter,
     ) { }
 
-    public function login(string $username, string $password)
+    public function login(string $username, string $password): void
     {
-        return $this->adapter->login(
+        $this->adapter->login(
             username: $username,
             password: $password,
         );
@@ -22,7 +22,7 @@ class CeClient
 
     public function logout(): string
     {
-        return $this->logout();
+        return $this->adapter->logout();
     }
 
     public function tipoPratica(): array|string
@@ -47,10 +47,10 @@ class CeClient
         return $this->adapter->elencoPaesi();
     }
 
-    public function elencoCciaa(string $tipoPratica): array|string
+    public function elencoCciaa(string $codicePratica): array|string
     {
         return $this->adapter->elencoCciaa(
-            tipoPratica: $tipoPratica,
+            codicePratica: $codicePratica,
         );
     }
 
@@ -61,7 +61,24 @@ class CeClient
         );
     }
 
-    public function inserisciPratica(array $datiPratica, TipoPratica $tipoPratica): array|string
+    public function speditori(): array|string
+    {
+        return $this->adapter->speditori();
+    }
+
+    public function legaleRappresentante(array $datiLegaleRappresentante)
+    {
+        return $this->adapter->legaleRappresentante(
+            datiLegaleRappresentante: $datiLegaleRappresentante,
+        );
+    }
+
+    public function firmatari()
+    {
+        return $this->adapter->firmatari();
+    }
+
+    public function inserisciPratica(array $datiPratica, string $tipoPratica): array|string
     {
         return $this->adapter->inserisciPratica(
             datiPratica: $datiPratica,
@@ -69,7 +86,7 @@ class CeClient
         );
     }
 
-    public function modificaPratica(array $datiPratica, string $codicePratica, TipoPratica $tipoPratica): array|string
+    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica): array|string
     {
         return $this->adapter->modificaPratica(
             datiPratica: $datiPratica,

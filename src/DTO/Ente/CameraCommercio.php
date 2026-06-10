@@ -2,7 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero\DTO\Ente;
 
-final class CameraCommercio
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+
+final class CameraCommercio implements DataObject
 {
     public function __construct(
         public readonly string $cciaaMaster,
@@ -20,5 +22,15 @@ final class CameraCommercio
             'codiceEnte' => $this->codiceEnte,
             'denominazione' => $this->denominazione,
         ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            cciaaMaster: $data['cciaaMaster'],
+            codAooProt: $data['codiceAoo'],
+            codiceEnte: $data['codiceEnte'],
+            denominazione: $data['descrizione'],
+        );
     }
 }

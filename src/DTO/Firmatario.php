@@ -2,10 +2,10 @@
 
 namespace IBSWebCO\CommercioEstero\DTO;
 
-use IBSWebCO\CommercioEstero\Enums\Firmatario\Ruolo;
-use IBSWebCO\CommercioEstero\Enums\Firmatario\Tipo;
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+use IBSWebCO\CommercioEstero\Enums\SoggettoFirmatario;
 
-final class Firmatario
+final class Firmatario implements DataObject
 {
     public function __construct(
         public readonly bool $checkRuolo,
@@ -15,8 +15,8 @@ final class Firmatario
         public readonly bool $enabled,
         public readonly string $nome,
         public readonly bool $registroImprese,
-        public readonly ?Ruolo $ruolo,
-        public readonly ?Tipo $tipoFirmatario,
+        public readonly ?string $ruolo,
+        public readonly ?string $tipoFirmatario,
         public readonly bool $validate, 
     )
     { }
@@ -27,7 +27,7 @@ final class Firmatario
             'checkRuolo' => $this->checkRuolo,
             'codiceFiscale' => $this->codiceFiscale,
             'cognome' => $this->cognome,
-            'documentoCarica' => $this->documentoCarica ?? [ 'firmato' => false ],//new \stdClass(),
+            'documentoCarica' => $this->documentoCarica ?? [ 'firmato' => false ],
             'enabled' => $this->enabled,
             'nome' => $this->nome,
             'registroImporese' => $this->registroImprese,
@@ -35,5 +35,21 @@ final class Firmatario
             'tipoFirmatario' => $this->tipoFirmatario ?? '',
             'validate' => $this->validate,
         ];    
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            checkRuolo: $data['checkRuolo'] ?? false,
+            codiceFiscale: $data['codiceFiscale'] ?? '',
+            cognome: $data['cognome'] ?? '',
+            documentoCarica: $data['documentoCarica'] ?? null,
+            enabled: $data['enabled'] ?? false,
+            nome: $data['nome'] ?? '',
+            registroImprese: $data['registroImprese'] ?? false,
+            ruolo: $data['ruolo'] ?? '',
+            tipoFirmatario: $data['tipoFirmatario'] ?? SoggettoFirmatario::SOGGETTO_FIRMATARIO,
+            validate: $data['validate'] ?? false,
+        );
     }
 }

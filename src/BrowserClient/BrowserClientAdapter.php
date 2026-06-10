@@ -7,9 +7,9 @@ use GuzzleHttp\Cookie\CookieJar as GuzzleHttpCookieJar;
 use IBSWebCO\CommercioEstero\BrowserClient\Exceptions\BrowserClientException;
 use IBSWebCO\CommercioEstero\BrowserClient\Exceptions\LoginException;
 use IBSWebCO\CommercioEstero\CeClientAdapter;
-use IBSWebCO\CommercioEstero\Enums\TipoPratica;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
+
 
 class BrowserClientAdapter implements CeClientAdapter
 {
@@ -35,20 +35,16 @@ class BrowserClientAdapter implements CeClientAdapter
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:150.0) Gecko/20100101 Firefox/150.0',
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15',
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
-
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36',
     ];
 
-    public function __construct()
+    public function __construct(
+        private bool $debug = false,
+    )
     {
         $this->client = new Client();
 
         $this->browser = new HttpBrowser(HttpClient::create());
-    }
-
-    public function __destruct()
-    {
-        $this->logout();
     }
 
     /**
@@ -95,15 +91,15 @@ class BrowserClientAdapter implements CeClientAdapter
 
         if (str_contains($response, 'completa')) {
             throw new LoginException(
-                message: $response,
-                code: 'AU03',
+                message: $response.' (AU03)',
+                code: 3,
             );
         }
 
         if (str_contains($response, 'scaduta')) {
             throw new LoginException(
-                message: $response,
-                code: 'AU04',
+                message: $response .' (AU04)',
+                code: 4,
             );
         }
         
@@ -115,22 +111,22 @@ class BrowserClientAdapter implements CeClientAdapter
             $this->logout();
 
             throw new LoginException(
-                message: $response,
-                code: 'AU08',
+                message: $response .' (AU08)',
+                code: 8,
             );
         }
 
         if (str_contains($response, 'riuscita')) {
             throw new LoginException(
-                message: $response,
-                code: 'AU01',
+                message: $response .' (AU01)',
+                code: 1,
             );
         }
 
         if (str_contains($response, 'nuova password')) {
             throw new LoginException(
-                message: $response,
-                code: 'AU09',
+                message: $response.' (AU09)',
+                code: 9,
             );
         }
 
@@ -160,7 +156,7 @@ class BrowserClientAdapter implements CeClientAdapter
     public function logout(): string
     {
         $logoutResponse = $this->client->get(
-            uri: 'https://login.infocamere.it/eacologin/logout.action',
+            uri: 'https://login.infocamere.it/eacologin/logout.action?fw=false&cp=0',
             options: [
                 'cookies' => $this->guzzleCookieJar,
             ]
@@ -338,6 +334,20 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
+    public function legaleRappresentante(array $datiLegaleRappresentante): array|string
+    {
+        return $this->callPrivateApi(
+            method: 'post',
+            uriPart: 'foegWeb/private/registroimprese/legaleRappresentante',
+            data: $datiLegaleRappresentante,
+        );
+    }
+
+    public function firmatari(): array|string
+    {
+        throw new \Exception('Not implemented');
+    }
+
     /**
      * Dettgali pratica
      * 
@@ -361,7 +371,7 @@ class BrowserClientAdapter implements CeClientAdapter
      * 
      * @throws \IBSWebCO\CommercioEstero\BrowserClient\Exceptions\BrowserClientException
      */
-    public function inserisciPratica(array $datiPratica, TipoPratica $tipoPratica = TipoPratica::CO): array|string
+    public function inserisciPratica(array $datiPratica, string $tipoPratica = 'co'): array|string
     {
         return $this->callPrivateApi(
             method: 'post',
@@ -379,12 +389,21 @@ class BrowserClientAdapter implements CeClientAdapter
      * 
      * @return array|string
      */
-    public function modificaPratica(array $datiPratica, string $codicePratica, TipoPratica $tipoPratica = TipoPratica::CO): array|string
+    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica = 'co'): array|string
     {
         return $this->callPrivateApi(
             method: 'put',
             uriPart: 'foegWeb/private/bozza?codicePratica='.strtoupper($tipoPratica).'&idBozza='.$codicePratica,
             data: $datiPratica,
+        );
+    }
+
+    public function inserisciAllegato(array $datiAllegato, string $codiceRichiesta, string $tipoDocumento, string $tipoPratica = 'co'): string|array
+    {
+        return $this->callPrivateApi(
+            method: 'post',
+            uriPart: 'foegWeb/private/file?tipoRichiesta='.strtoupper($tipoPratica).'&codiceRichiesta='.$codiceRichiesta.'&tipoDocumento='.$tipoDocumento,
+            data: $datiAllegato,
         );
     }
 
@@ -395,7 +414,7 @@ class BrowserClientAdapter implements CeClientAdapter
      * 
      * @return array|string
      */
-    public function downloadDistinta(string $codicePratica)
+    public function downloadDistinta(string $codicePratica): array|string
     {
         return $this->callPrivateApi(
             method: 'get',
@@ -414,7 +433,7 @@ class BrowserClientAdapter implements CeClientAdapter
      * 
      * @throws \IBSWebCO\CommercioEstero\BrowserClient\Exceptions\BrowserClientException
      */
-    private function callPrivateApi(string $method, string $uriPart, ?array $data = null, bool $debug = false): array|string
+    private function callPrivateApi(string $method, string $uriPart, ?array $data = null): array|string
     {
         $k = array_rand($this->userAgents, 1);
 
@@ -433,7 +452,7 @@ class BrowserClientAdapter implements CeClientAdapter
                     'cookies' => $this->guzzleCookieJar,
                     //'json' => $data,
                     'body' => base64_encode(json_encode($data)),
-                    'debug' => $debug,
+                    'debug' => $this->debug,
                 ],
             );
 

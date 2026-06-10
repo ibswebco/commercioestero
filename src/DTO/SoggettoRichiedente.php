@@ -2,9 +2,10 @@
 
 namespace IBSWebCO\CommercioEstero\DTO;
 
-use IBSWebCO\CommercioEstero\Enums\Firmatario\Ruolo;
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+use IBSWebCO\CommercioEstero\Enums\Ruolo;
 
-final class SoggettoRichiedente
+final class SoggettoRichiedente implements DataObject
 {
     public function __construct(
         public readonly string $cap,
@@ -26,7 +27,7 @@ final class SoggettoRichiedente
     {
         return [
             //'cap' => $this->cap,
-            'codiceFiscale' => strtoupper($this->codiceFiscale),
+            'codiceFiscale' => $this->codiceFiscale,
             //'coumne' => strtoupper($this->comune),
             'denominazione' => $this->denominazione,
             //'impresaEstera' => false,
@@ -42,5 +43,23 @@ final class SoggettoRichiedente
                 'denominazione' => '',
             ]
         ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            cap: $data['cap'] ?? '',
+            codiceFiscale: $data['codiceFiscale'] ?? '',
+            comune: $data['comune'] ?? '',
+            denominazione: $data['denominazione'] ?? '',
+            indirizzo: $data['indirizzo'] ?? '',
+            numeroRea: $data['numeroRea'] ?? '',
+            partitaIva: $data['partitaIva'] ?? '',
+            provincia: $data['provincia'] ?? '',
+            registroImprese: $data['registroImprese'] ?? false,
+            registroImpreseSiglaProvincia: $data['registroImpreseSiglaProvincia'] ?? '',
+            ruolo: Ruolo::from($data['ruolo']) ?? Ruolo::PERSONA_FISICA,
+            sedeLegale: $data['sedeLegale'] ?? '',
+        );
     }
 }

@@ -2,7 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero\DTO;
 
-final class UtenteRichiedente
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+
+final class UtenteRichiedente implements DataObject
 {
     public function __construct(
         public readonly string $accountId,
@@ -24,5 +26,17 @@ final class UtenteRichiedente
             'nome' => strtoupper($this->nome),
             'userId' => $this->userId,
         ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            accountId: $data['accountId'] ?? '',
+            codiceFiscale: $data['codicFiscale'] ?? '',
+            cognome: $data['cognome'] ?? '',
+            email: $data['email'] ?? '',
+            nome: $data['nome'] ?? '',
+            userId: $data['userId'] ?? '',
+        );
     }
 }

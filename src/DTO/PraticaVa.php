@@ -4,11 +4,12 @@ namespace IBSWebCO\CommercioEstero\DTO;
 
 use IBSWebCO\CommercioEstero\DTO\Ente\CameraCommercio;
 use IBSWebCO\CommercioEstero\DTO\Ente\Sede;
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
 use IBSWebCO\CommercioEstero\Enums\TipoConsegna;
 use IBSWebCO\CommercioEstero\Enums\TipoPagamento;
 use IBSWebCO\CommercioEstero\Enums\TipoSupporto;
 
-final class PraticaVa
+final class PraticaVa implements DataObject
 {
     public function __construct(
         public readonly array $certificati,
@@ -20,7 +21,7 @@ final class PraticaVa
         public readonly CameraCommercio $ente,
         public readonly Sede $sede,
         public readonly Firmatario $firmatario,
-        public readonly string $note,
+        public readonly ?string $note,
         public readonly SoggettoRichiedente $soggettoRichiedente,
         public readonly TipoConsegna $tipoConsegna,
         public readonly TipoPagamento $tipoPagamento,
@@ -43,7 +44,7 @@ final class PraticaVa
             'firmatario' => $this->firmatario->toArray(),
             'linguaDocumentoSintesi' => 'it',
             'linguaPortale' => 'it',
-            'note' => $this->note,
+            'note' => $this->note ?? '',
             'sede' => $this->sede->toArray(),
             'soggettoRichiedente' => $this->soggettoRichiedente->toArray(),
             'tipoConsegna' => $this->tipoConsegna,
@@ -52,5 +53,27 @@ final class PraticaVa
             'urgente' => $this->urgente,
             'utenteRichiedente' => $this->utenteRichiedente->toArray(),
         ]; 
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            certificati: $data['certificati'] ?? [],
+            certificazioniAllegati: $data['certificazioniAllegati'] ?? [],
+            consegnaDomicilio: $data['consegnaDomicilio'] ?? false,
+            consegnaSportello: $data['consegnaSportello'] ?? false,
+            consegnaStampaAzienda: $data['consegnaStampaAzienda'] ?? true,
+            delega: $data['delega'] ?? [],
+            ente: $data['ente'],
+            sede: $data['sede'],
+            firmatario: $data['firmatario'] ?? [],
+            note: $data['note'] ?? null,
+            soggettoRichiedente: $data['soggettoRichiedente'] ?? [],
+            tipoConsegna: $data['tipoConsegna'] ?? TipoConsegna::STAMPA_AZIENDA,
+            tipoPagamento: $data['tipoPagamento'] ?? TipoPagamento::TELEMACO,
+            tipoSupporto: $data['tipoSupporto'] ?? TipoSupporto::FOLGIO_BIANCO,
+            urgente: $data['urgente'] ?? false,
+            utenteRichiedente: $data['utenterRichiedente'] ?? [],
+        );
     }
 }

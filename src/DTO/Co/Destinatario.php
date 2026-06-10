@@ -2,7 +2,10 @@
 
 namespace IBSWebCO\CommercioEstero\DTO\Co;
 
-final class Destinatario
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+use Override;
+
+final class Destinatario implements DataObject
 {
     public function __construct(
         public readonly ?string $denominazione,
@@ -30,5 +33,14 @@ final class Destinatario
             'destinatarioNonNoto' => new \stdClass(),
             'noto' => true,
         ];    
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            denominazione: $data['denominazione'] ?? null,
+            indirizzo: $data['indirizzo'] ?? null,
+            stato: $data['stato'] ?? null,
+        );   
     }
 }

@@ -9,11 +9,12 @@ use IBSWebCO\CommercioEstero\DTO\Co\Speditore;
 use IBSWebCO\CommercioEstero\DTO\Ente\CameraCommercio;
 use IBSWebCO\CommercioEstero\DTO\Ente\Sede;
 use IBSWebCO\CommercioEstero\DTO\Firmatario;
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
 use IBSWebCO\CommercioEstero\DTO\SoggettoRichiedente;
 use IBSWebCO\CommercioEstero\DTO\UtenteRichiedente;
 use IBSWebCO\CommercioEstero\Enums\TipoPagamento;
 
-final class PraticaCo
+final class PraticaCo implements DataObject
 {
     public function __construct (
         public readonly Destinatario $destinatario,
@@ -28,13 +29,13 @@ final class PraticaCo
         public readonly OpzioniCertificato $opzioniCertificato,
         public readonly array $origineExtraUe,
         public readonly array $origineUe,
-        public readonly string $osservazioni,
+        public readonly ?string $osservazioni,
         public readonly Sede $sede,
         //public readonly Tipo $selezionaFirmatario,
         public readonly SoggettoRichiedente $soggettoRichiedente,
         public readonly Speditore $speditore,
         public readonly TipoPagamento $tipoPagamento,
-        public readonly string $trasporto,
+        public readonly ?string $trasporto,
         public readonly UtenteRichiedente $utenteRichiedente,    
     )
     { }
@@ -68,5 +69,29 @@ final class PraticaCo
             'valuta' => 'EUR',
             'importoRichiesta' => 0.0,
         ];
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            destinatario: $data['destinatario'] ?? Destinatario::fromArray([]),
+            dichiarazioneMerciFatture: $data['dichiarazioneMerciFatture'] ?? DichiarazioneMerciFatture::fromArray([]),
+            ente: $data['ente'],
+            evasioneAutomatica: $data['evasioneAutomatica'] ?? false,
+            fatturatoTotale: $data['datturatoTotale'] ?? 0,
+            firmatario: $data['firmatario'] ?? Firmatario::fromArray([]),
+            gicenzaMerci: $data['giacenzaMerci'] ?? '',
+            note: $data['note'] ?? '',
+            opzioniCertificato: $data['opzioniCertificato'] ?? OpzioniCertificato::fromArray([]),
+            origineExtraUe: $data['origineExtraUe'] ?? [],
+            origineUe: $data['origineUe'] ?? [],
+            osservazioni: $data['osservazioni'] ?? null,
+            sede: $data['sede'],
+            soggettoRichiedente: $data['soggettoRichiedente'] ?? SoggettoRichiedente::fromArray([]),
+            speditore: $data['speditore'] ?? Speditore::fromArray([]),
+            tipoPagamento: $data['tipoPagamento'] ?? TipoPagamento::TELEMACO,
+            trasporto: $data['trasporto'] ?? null,
+            utenteRichiedente: $data['utenteRichiedente'] ?? UtenteRichiedente::fromArray([]),
+        );
     }
 }

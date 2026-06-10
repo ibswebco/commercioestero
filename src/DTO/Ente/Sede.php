@@ -2,7 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero\DTO\Ente;
 
-final class Sede
+use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
+
+final class Sede implements DataObject
 {
     public function __construct(
         public readonly string $descrizione,
@@ -16,5 +18,13 @@ final class Sede
             'descrizione' => $this->descrizione,
             'progressivo' => $this->progressivo,
         ];    
+    }
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            descrizione: $data['descrizione'],
+            progressivo: $data['progressivo'],
+        );
     }
 }
