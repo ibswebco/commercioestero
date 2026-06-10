@@ -2,7 +2,7 @@
     "name": "ibswebco/commercioestero",
     "description": "Client per interfaccia con servizi CommercioEstero",
     "type": "library",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "require": {
         "guzzlehttp/guzzle": "^7.10",
         "symfony/browser-kit": "8.2.x-dev",
