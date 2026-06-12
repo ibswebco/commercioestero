@@ -9,10 +9,9 @@ final class DichiarazioneMerciFatture implements DataObject
     public function __construct(
         public readonly ?string $denominazione,
         public readonly ?string $quantita,
-    )
-    { }
+    ) {}
 
-    public function toArray(): array 
+    public function toArray(): array
     {
         return $this->denominazione ? [
             'dichiarazioneTestuale' => [

@@ -13,8 +13,7 @@ final class UtenteRichiedente implements DataObject
         public readonly string $email,
         public readonly string $nome,
         public readonly string $userId,
-    )
-    { }
+    ) {}
 
     public function toArray(): array
     {

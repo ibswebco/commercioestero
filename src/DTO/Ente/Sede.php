@@ -9,15 +9,14 @@ final class Sede implements DataObject
     public function __construct(
         public readonly string $descrizione,
         public readonly string $progressivo,
-    )    
-    { }
+    ) {}
 
-    public function toArray(): array 
+    public function toArray(): array
     {
         return [
             'descrizione' => $this->descrizione,
             'progressivo' => $this->progressivo,
-        ];    
+        ];
     }
 
     public static function fromArray(array $data): self

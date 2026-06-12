@@ -11,8 +11,7 @@ final class CameraCommercio implements DataObject
         public readonly string $codAooProt,
         public readonly string $codiceEnte,
         public readonly string $denominazione,
-    )
-    { }
+    ) {}
 
     public function toArray(): array
     {

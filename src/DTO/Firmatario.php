@@ -17,24 +17,23 @@ final class Firmatario implements DataObject
         public readonly bool $registroImprese,
         public readonly ?string $ruolo,
         public readonly ?string $tipoFirmatario,
-        public readonly bool $validate, 
-    )
-    { }
+        public readonly bool $validate,
+    ) {}
 
-    public function toArray(): array  
+    public function toArray(): array
     {
         return [
             'checkRuolo' => $this->checkRuolo,
             'codiceFiscale' => $this->codiceFiscale,
             'cognome' => $this->cognome,
-            'documentoCarica' => $this->documentoCarica ?? [ 'firmato' => false ],
+            'documentoCarica' => $this->documentoCarica ?? ['firmato' => false],
             'enabled' => $this->enabled,
             'nome' => $this->nome,
             'registroImporese' => $this->registroImprese,
             'ruolo' => $this->ruolo ?? '',
             'tipoFirmatario' => $this->tipoFirmatario ?? '',
             'validate' => $this->validate,
-        ];    
+        ];
     }
 
     public static function fromArray(array $data): self

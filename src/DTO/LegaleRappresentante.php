@@ -7,15 +7,14 @@ use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
 final class LegaleRappresentante implements DataObject
 {
     public function __construct(
-       public readonly string $codiceFiscaleImpresa,
-       public readonly string $codiceFiscaleLegaleRappresentante,
-       public readonly string $cognomeLegaleRappresentante,
-       public readonly string $nomeLegaleRappresentante,
-       public readonly string $tipoFirmatario, 
-    )
-    { }
+        public readonly string $codiceFiscaleImpresa,
+        public readonly string $codiceFiscaleLegaleRappresentante,
+        public readonly string $cognomeLegaleRappresentante,
+        public readonly string $nomeLegaleRappresentante,
+        public readonly string $tipoFirmatario,
+    ) {}
 
-    public function toArray(): array 
+    public function toArray(): array
     {
         return [
             'codiceFiscaleImpresa' => $this->codiceFiscaleImpresa,
@@ -23,7 +22,7 @@ final class LegaleRappresentante implements DataObject
             'cognomeLegaleRappresentante' => $this->cognomeLegaleRappresentante,
             'nomeLegaleRappresentante' => $this->nomeLegaleRappresentante,
             'tipoFirmatario' => $this->tipoFirmatario,
-        ];    
+        ];
     }
 
     public static function fromArray(array $data): self

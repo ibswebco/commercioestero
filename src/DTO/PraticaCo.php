@@ -8,17 +8,14 @@ use IBSWebCO\CommercioEstero\DTO\Co\OpzioniCertificato;
 use IBSWebCO\CommercioEstero\DTO\Co\Speditore;
 use IBSWebCO\CommercioEstero\DTO\Ente\CameraCommercio;
 use IBSWebCO\CommercioEstero\DTO\Ente\Sede;
-use IBSWebCO\CommercioEstero\DTO\Firmatario;
 use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
-use IBSWebCO\CommercioEstero\DTO\SoggettoRichiedente;
-use IBSWebCO\CommercioEstero\DTO\UtenteRichiedente;
 use IBSWebCO\CommercioEstero\Enums\TipoPagamento;
 
 final class PraticaCo implements DataObject
 {
-    public function __construct (
+    public function __construct(
         public readonly Destinatario $destinatario,
-        //public readonly ?array $certificazioniAllegati,
+        // public readonly ?array $certificazioniAllegati,
         public readonly DichiarazioneMerciFatture $dichiarazioneMerciFatture,
         public readonly CameraCommercio $ente,
         public readonly bool $evasioneAutomatica,
@@ -31,14 +28,13 @@ final class PraticaCo implements DataObject
         public readonly array $origineUe,
         public readonly ?string $osservazioni,
         public readonly Sede $sede,
-        //public readonly Tipo $selezionaFirmatario,
+        // public readonly Tipo $selezionaFirmatario,
         public readonly SoggettoRichiedente $soggettoRichiedente,
         public readonly Speditore $speditore,
         public readonly TipoPagamento $tipoPagamento,
         public readonly ?string $trasporto,
-        public readonly UtenteRichiedente $utenteRichiedente,    
-    )
-    { }
+        public readonly UtenteRichiedente $utenteRichiedente,
+    ) {}
 
     public function toArray(): array
     {
@@ -60,7 +56,7 @@ final class PraticaCo implements DataObject
             'origineUe' => $this->origineUe,
             'osservazioni' => $this->osservazioni,
             'sede' => $this->sede->toArray(),
-            //'selezionaFirmatario' => $this->selezionaFirmatario,
+            // 'selezionaFirmatario' => $this->selezionaFirmatario,
             'soggettoRichiedente' => $this->soggettoRichiedente->toArray(),
             'speditore' => $this->speditore->toArray(),
             'tipoPagamento' => $this->tipoPagamento,

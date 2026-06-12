@@ -2,11 +2,9 @@
 
 namespace IBSWebCO\CommercioEstero;
 
-use IBSWebCO\CommercioEstero\Enums\TipoPratica;
-
 class CeClient
 {
-    protected string $version = "1.0.1";
+    protected string $version = '1.0.1';
 
     public function __construct(private CeClientAdapter $adapter) {}
 

@@ -11,9 +11,8 @@ final class Speditore implements DataObject
         public readonly ?array $esporatore = null,
         public readonly string $ruolo = '',
         public readonly ?array $spedizioniere = null,
-    ) 
-    { }
-    
+    ) {}
+
     public function toArray(): array
     {
         return [

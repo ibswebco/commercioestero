@@ -32,21 +32,21 @@ interface CeClientAdapter
 
     public function inserisciPratica(
         array $datiPratica,
-        string $tipoPratica = "co",
+        string $tipoPratica = 'co',
     ): array|string;
 
     public function modificaPratica(
         array $datiPratica,
         string $codicePratica,
-        string $tipoPratica = "co",
+        string $tipoPratica = 'co',
     ): array|string;
 
     public function inserisciAllegato(
         array $datiAllegato,
         string $codiceRichiesta,
         string $tipoDocumento,
-        string $tipoPratica = "co",
-    ): string|array;
+        string $tipoPratica = 'co',
+    ): array|string;
 
     public function utente(bool $full = false): array|string;
 
