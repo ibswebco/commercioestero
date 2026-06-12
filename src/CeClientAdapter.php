@@ -10,7 +10,7 @@ interface CeClientAdapter
 
     public function tipoPratica(): array|string;
 
-    public function tipiFileAllegati(string $tipoPratica);
+    public function tipiFileAllegati(string $codicePratica);
 
     public function saldo(): array|string;
 
@@ -26,13 +26,27 @@ interface CeClientAdapter
 
     public function firmatari(): array|string;
 
-    public function legaleRappresentante(array $datiLegaleRappresentante): array|string;
+    public function legaleRappresentante(
+        array $datiLegaleRappresentante,
+    ): array|string;
 
-    public function inserisciPratica(array $datiPratica, string $tipoPratica = 'co'): array|string;
+    public function inserisciPratica(
+        array $datiPratica,
+        string $tipoPratica = "co",
+    ): array|string;
 
-    public function modificaPratica(array $datiPratica, string $codicePratica, string $tipoPratica = 'co'): array|string;
+    public function modificaPratica(
+        array $datiPratica,
+        string $codicePratica,
+        string $tipoPratica = "co",
+    ): array|string;
 
-    public function inserisciAllegato(array $datiAllegato, string $codiceRichiesta, string $tipoDocumento, string $tipoPratica = 'co'): string|array;
+    public function inserisciAllegato(
+        array $datiAllegato,
+        string $codiceRichiesta,
+        string $tipoDocumento,
+        string $tipoPratica = "co",
+    ): string|array;
 
     public function utente(bool $full = false): array|string;
 

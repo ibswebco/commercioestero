@@ -30,9 +30,9 @@ class CeClient
         return $this->adapter->tipoPratica();
     }
 
-    public function tipiFileAllegati(string $tipoPratica): array|string
+    public function tipiFileAllegati(string $codicePratica): array|string
     {
-        return $this->adapter->tipiFileAllegati(tipoPratica: $tipoPratica);
+        return $this->adapter->tipiFileAllegati(codicePratica: $codicePratica);
     }
 
     public function saldo(): array|string
