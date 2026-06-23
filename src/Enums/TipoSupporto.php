@@ -4,7 +4,7 @@ namespace IBSWebCO\CommercioEstero\Enums;
 
 enum TipoSupporto: string
 {
-    case FOGLIO_BIANCO = 'COD_SFONDO_BIANCO';
+    case FOGLIO_BIANCO = "COD_SFONDO_BIANCO";
 
-    case FORMULARIO = 'COD_FORMULARIO';
+    case FORMULARIO = "COD_FORMULARIO";
 }

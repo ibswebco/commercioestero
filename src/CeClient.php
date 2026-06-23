@@ -4,7 +4,7 @@ namespace IBSWebCO\CommercioEstero;
 
 class CeClient
 {
-    protected string $version = '1.0.1';
+    protected string $version = "1.0.1";
 
     public function __construct(private CeClientAdapter $adapter) {}
 
@@ -70,6 +70,11 @@ class CeClient
         return $this->adapter->firmatari();
     }
 
+    public function dettagliPratica(string $codicePratica): array|string
+    {
+        return $this->adapter->dettagliPratica(codicePratica: $codicePratica);
+    }
+
     public function inserisciPratica(
         array $datiPratica,
         string $tipoPratica,
@@ -88,6 +93,20 @@ class CeClient
         return $this->adapter->modificaPratica(
             datiPratica: $datiPratica,
             codicePratica: $codicePratica,
+            tipoPratica: $tipoPratica,
+        );
+    }
+
+    public function inserisciAllegato(
+        array $datiAllegato,
+        string $codiceRichiesta,
+        int $tipoDocumento,
+        string $tipoPratica = "co",
+    ): array|string {
+        return $this->adapter->inserisciAllegato(
+            datiAllegato: $datiAllegato,
+            codiceRichiesta: $codiceRichiesta,
+            tipoDocumento: $tipoDocumento,
             tipoPratica: $tipoPratica,
         );
     }

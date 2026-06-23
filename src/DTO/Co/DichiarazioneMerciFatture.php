@@ -4,31 +4,33 @@ namespace IBSWebCO\CommercioEstero\DTO\Co;
 
 use IBSWebCO\CommercioEstero\DTO\Interfaces\DataObject;
 
-final class DichiarazioneMerciFatture implements DataObject
+final readonly class DichiarazioneMerciFatture implements DataObject
 {
     public function __construct(
-        public readonly ?string $denominazione,
-        public readonly ?string $quantita,
+        public ?string $denominazione,
+        public ?string $quantita,
     ) {}
 
     public function toArray(): array
     {
-        return $this->denominazione ? [
-            'dichiarazioneTestuale' => [
-                'denominazione' => $this->denominazione,
-                'quantita' => $this->quantita,
-            ],
-            'tipologia' => 'DESCRIZIONE_TESTUALE',
-        ] : [
-            'tipologia' => '',
-        ];
+        return $this->denominazione
+            ? [
+                "dichiarazioneTestuale" => [
+                    "denominazione" => $this->denominazione,
+                    "quantita" => $this->quantita,
+                ],
+                "tipologia" => "DESCRIZIONE_TESTUALE",
+            ]
+            : [
+                "tipologia" => "",
+            ];
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
-            denominazione: $data['denominazione'] ?? null,
-            quantita: $data['quantita'] ?? null,
+            denominazione: $data["denominazione"] ?? null,
+            quantita: $data["quantita"] ?? null,
         );
     }
 }
