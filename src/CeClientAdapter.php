@@ -2,6 +2,8 @@
 
 namespace IBSWebCO\CommercioEstero;
 
+use IBSWebCO\CommercioEstero\Enums\TipoPratica;
+
 interface CeClientAdapter
 {
     public function login(string $username, string $password): void;
@@ -43,6 +45,17 @@ interface CeClientAdapter
 
     public function dettagliPratica(string $codicePratica): array|string;
 
+    public function firmaOffline(
+        string $codicePratica,
+        string $codiceFiscaleFirmatario,
+        array $riepilogo,
+    ): array|string;
+
+    public function inviaPratica(
+        string $codicePratica,
+        TipoPratica $tipoPratica,
+    ): array|string;
+
     public function inserisciAllegato(
         array $datiAllegato,
         string $codiceRichiesta,
@@ -53,4 +66,14 @@ interface CeClientAdapter
     public function utente(bool $full = false): array|string;
 
     public function downloadDistinta(string $codicePratica): array|string;
+
+    public function pratiche(
+        bool $archiviate = false,
+        string $label = "",
+        int $pageNumber = 1,
+        int $pageSize = 3,
+        string $query = "",
+        string $tipologiaRichiesta = "",
+        bool $viewAllPratcihe = false,
+    ): array|string;
 }

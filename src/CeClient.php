@@ -2,6 +2,8 @@
 
 namespace IBSWebCO\CommercioEstero;
 
+use IBSWebCO\CommercioEstero\Enums\TipoPratica;
+
 class CeClient
 {
     protected string $version = "1.0.1";
@@ -116,8 +118,50 @@ class CeClient
         return $this->adapter->downloadDistinta(codicePratica: $codicePratica);
     }
 
+    public function inviaPratica(
+        string $codicePratica,
+        TipoPratica $tipoPratica,
+    ): string|array {
+        return $this->adapter->inviaPratica(
+            codicePratica: $codicePratica,
+            tipoPratica: $tipoPratica,
+        );
+    }
+
+    public function firmaOffline(
+        string $codicePratica,
+        string $codiceFiscaleFirmatario,
+        array $riepilogo,
+    ): array|string {
+        return $this->adapter->firmaOffline(
+            codicePratica: $codicePratica,
+            codiceFiscaleFirmatario: $codiceFiscaleFirmatario,
+            riepilogo: $riepilogo,
+        );
+    }
+
     public function utente(bool $full = false): array|string
     {
         return $this->adapter->utente(full: $full);
+    }
+
+    public function pratiche(
+        bool $archiviate = false,
+        string $label = "",
+        int $pageNumber = 1,
+        int $pageSize = 3,
+        string $query = "",
+        string $tipologiaRichiesta = "",
+        bool $viewAllPratcihe = false,
+    ): array|string {
+        return $this->adapter->pratiche(
+            archiviate: $archiviate,
+            label: $label,
+            pageNumber: $pageNumber,
+            pageSize: $pageSize,
+            query: $query,
+            tipologiaRichiesta: $tipologiaRichiesta,
+            viewAllPratcihe: $viewAllPratcihe,
+        );
     }
 }

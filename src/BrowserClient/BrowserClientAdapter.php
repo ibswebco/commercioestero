@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 use IBSWebCO\CommercioEstero\BrowserClient\Exceptions\BrowserClientException;
 use IBSWebCO\CommercioEstero\BrowserClient\Exceptions\LoginException;
 use IBSWebCO\CommercioEstero\CeClientAdapter;
+use IBSWebCO\CommercioEstero\Enums\TipoPratica;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -128,20 +129,20 @@ class BrowserClientAdapter implements CeClientAdapter
 
         $this->guzzleCookieJar = GuzzleHttpCookieJar::fromArray(
             cookies: $this->browser->getCookieJar()->all(),
-            domain: "https://commercioestero.camcom.it",
+            domain: $this->baseUrl,
         );
     }
 
     public function logout(): string
     {
-        $logoutResponse = $this->client->get(
+        $this->client->get(
             uri: "https://login.infocamere.it/eacologin/logout.action?fw=false",
             options: [
                 "cookies" => $this->guzzleCookieJar,
             ],
         );
 
-        return $logoutResponse->getBody();
+        return "ok";
     }
 
     /**
@@ -384,6 +385,65 @@ class BrowserClientAdapter implements CeClientAdapter
             method: "get",
             uriPart: "foegWeb/private/distinta?codiceRichiesta=" .
                 $codicePratica,
+        );
+    }
+
+    /**
+     * upload del file pdf firmato del riepilogo (ex xml).
+     */
+    public function firmaOffline(
+        string $codicePratica,
+        string $codiceFiscaleFirmatario,
+        array $riepilogo,
+    ): array|string {
+        return $this->callPrivateApi(
+            method: "post",
+            uriPart: "foegWeb/private/codiceRichiesta=" .
+                $codicePratica .
+                '$codiceFiscaleFirmatario=' .
+                $codiceFiscaleFirmatario,
+            data: $riepilogo,
+        );
+    }
+
+    public function inviaPratica(
+        string $codicePratica,
+        TipoPratica $tipoPratica = TipoPratica::CO,
+    ): array|string {
+        return $this->callPrivateApi(
+            method: "post",
+            uriPart: "foegWeb/private/pratica/pagaeinvia?codiceRichiesta=" .
+                $codicePratica .
+                "&tipoRichiesta=" .
+                $tipoPratica->value,
+            data: [
+                "codicePratica" => $codicePratica,
+                "tipoPratica" => $tipoPratica->value,
+            ],
+        );
+    }
+
+    public function pratiche(
+        bool $archiviate = false,
+        string $label = "",
+        int $pageNumber = 1,
+        int $pageSize = 3,
+        string $query = "",
+        string $tipologiaRichiesta = "",
+        bool $viewAllPratcihe = false,
+    ): array|string {
+        return $this->callPrivateApi(
+            method: "post",
+            uriPart: "foegWeb/private/pratiche",
+            data: [
+                "archiviate" => $archiviate,
+                "label" => $label,
+                "pageNumber" => $pageNumber,
+                "pageSize" => $pageSize,
+                "query" => $query,
+                "tipologiaRichiesta" => $tipologiaRichiesta,
+                "viewAllPratiche" => $viewAllPratcihe,
+            ],
         );
     }
 

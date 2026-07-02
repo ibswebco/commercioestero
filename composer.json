@@ -14,7 +14,8 @@
         "symfony/browser-kit": "8.2.x-dev",
         "symfony/http-client": "8.2.x-dev",
         "symfony/mime": "8.2.x-dev",
-        "symfony/css-selector": "8.2.x-dev"
+        "symfony/css-selector": "8.2.x-dev",
+        "illuminate/collections": "^13.18"
     },
     "license": "MIT",
     "autoload": {
