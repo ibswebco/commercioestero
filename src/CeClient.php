@@ -6,7 +6,7 @@ use IBSWebCO\CommercioEstero\Enums\TipoPratica;
 
 class CeClient
 {
-    protected string $version = "1.0.1";
+    protected string $version = "1.0.2";
 
     public function __construct(private CeClientAdapter $adapter) {}
 
