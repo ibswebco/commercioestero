@@ -2,20 +2,19 @@
 
 namespace IBSWebCO\CommercioEstero\BrowserClient\Exceptions;
 
-use Exception;
-use Override;
-use Throwable;
-
-class BrowserClientException extends Exception
+class BrowserClientException extends \Exception
 {
-    public function __construct(string $message = "", int $code = 0, Throwable|null $previous = null)
-    {
-        return parent::__construct($message, $code, $previous);
+    public function __construct(
+        string $message = '',
+        int $code = 0,
+        ?\Throwable $previous = null,
+    ) {
+        parent::__construct($message, $code, $previous);
     }
 
-    #[Override]
+    #[\Override]
     public function __toString(): string
     {
-        return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+        return __CLASS__.": [{$this->code}]: {$this->message}\n";
     }
 }

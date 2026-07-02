@@ -3,3 +3,5 @@ composer.lock
 index.php
 test.php
 model-*.json
+.php-cs-fixer.cache
+test_files/

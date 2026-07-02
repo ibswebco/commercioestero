@@ -4,7 +4,7 @@ indent_style = space
 [*.yml]
 indent_size = 2
 
-[composer.json]
+[*.json]
 indent_size = 4
 
 [*.php]

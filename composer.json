@@ -1,14 +1,21 @@
 {
     "name": "ibswebco/commercioestero",
     "description": "Client per interfaccia con servizi CommercioEstero",
+    "scripts": {
+        "lint:check": "vendor/bin/php-cs-fixer check",
+        "lint:fix": "vendor/bin/php-cs-fixer fix",
+        "analyse": "vendor/bin/phpstan analyse --memory-limit=1G"
+    },
     "type": "library",
     "version": "1.0.1",
     "require": {
+        "php": "^8.4",
         "guzzlehttp/guzzle": "^7.10",
         "symfony/browser-kit": "8.2.x-dev",
         "symfony/http-client": "8.2.x-dev",
         "symfony/mime": "8.2.x-dev",
-        "symfony/css-selector": "8.2.x-dev"
+        "symfony/css-selector": "8.2.x-dev",
+        "illuminate/collections": "^13.18"
     },
     "license": "MIT",
     "autoload": {
@@ -22,5 +29,10 @@
             "email": "m.simonetti@ibs.ve.it"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "phpstan/phpstan": "2.2.x-dev",
+        "friendsofphp/php-cs-fixer": "dev-master"
+    }
 }
