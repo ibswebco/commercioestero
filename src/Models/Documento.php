@@ -4,6 +4,16 @@ namespace IBSWebCO\CommercioEstero\Models;
 
 use IBSWebCO\CommercioEstero\Traits\Serializable;
 
+/**
+ * @property string $descrizioneTipoDocumento
+ * @property string $nome
+ * @property string $mimeType
+ * @property string $codiceTipoDocumento
+ * @property string $hash
+ * @property string $idGedoc
+ * @property string $idGedocOriginale
+ * @property array $firmatari
+ */
 class Documento
 {
     use Serializable;

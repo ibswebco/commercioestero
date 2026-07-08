@@ -4,6 +4,11 @@ namespace IBSWebCO\CommercioEstero\Models;
 
 use IBSWebCO\CommercioEstero\Traits\Serializable;
 
+/**
+ * @property string $file
+ * @property string $name
+ * @property string $type
+ */
 class DatiAllegato
 {
     use Serializable;

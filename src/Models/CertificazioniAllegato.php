@@ -6,7 +6,15 @@ use IBSWebCO\CommercioEstero\Traits\Serializable;
 use stdClass;
 
 /**
- * --@param Person[] $members
+ * @property Documento $documento
+ * @property int $attestatiLiberaVendita
+ * @property int $legalizzazioniFirme
+ * @property int $vistoDeposito
+ * @property int $vistoPoteriFirmaFattura
+ * @property int $vistoPoteriFirmaDichImpresa
+ * @property object $vistoDepositoInfo
+ * @property object $vistoPoteriFirmaInfo
+ * @property object $vistoPoteriFirmaFatturaInfo
  */
 class CertificazioniAllegato
 {

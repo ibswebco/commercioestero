@@ -4,6 +4,15 @@ namespace IBSWebCO\CommercioEstero\Models;
 
 use IBSWebCO\CommercioEstero\Traits\Serializable;
 
+/**
+ * @property string $linguaDocumentoSintesi
+ * @property string $linguaPortale
+ * @property Ente $ente
+ * @property Sede $sede
+ * @property Firmatario $firmatario
+ * @property SoggettoRichiedente $soggettoRichiedente
+ * @property UtenteRichiedente $utenteRichiedente
+ */
 abstract class PraticaBase
 {
     use Serializable;
