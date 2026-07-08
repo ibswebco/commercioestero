@@ -2,10 +2,8 @@
 
 namespace IBSWebCO\CommercioEstero\Traits;
 
-use IBSWebCO\CommercioEstero\Attributes\EmptySerialize;
 use Illuminate\Support\Collection;
 use ReflectionClass;
-use ReflectionProperty;
 use RuntimeException;
 
 trait Serializable
@@ -16,10 +14,6 @@ trait Serializable
             return $value->value;
         }
 
-        if (is_null($value)) {
-            return $this->readAttributes();
-        }
-
         if ($value instanceof Collection || is_array($value)) {
             return collect($value)
                 ->map(fn($v) => $this->castOutputValue($v, $depth))
@@ -27,26 +21,6 @@ trait Serializable
         }
 
         return $value;
-    }
-
-    private function onlyPublicProperties(string $key, int $depth): mixed
-    {
-        $reflectionClass = new ReflectionClass($this);
-
-        $property = $reflectionClass->getProperty($key);
-
-        if ($property && $property->isPublic()) {
-            return $this->castOutputValue($property->getValue(), $depth - 1);
-        }
-
-        /*foreach (
-            $reflectionClass->getProperties(ReflectionProperty::IS_PUBLIC)
-            as $property
-        ) {
-            return $this->castOutputValue($property->getValue(), $depth - 1);
-            }*/
-
-        return "";
     }
 
     public function toArray(int $depth = 3): array
@@ -72,8 +46,6 @@ trait Serializable
                 ],
             )
             ->all();
-
-        return [];
     }
 
     public function toJson(): string

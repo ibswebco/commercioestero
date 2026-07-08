@@ -2,14 +2,15 @@
 
 namespace IBSWebCO\CommercioEstero\Models;
 
-use IBSWebCO\CommercioEstero\Enums\TipoPagamento;
 use IBSWebCO\CommercioEstero\Traits\Serializable;
 
 abstract class PraticaBase
 {
     use Serializable;
 
-    public array $certificazioniAllegati = [];
+    public string $linguaDocumentoSintesi = "it";
+
+    public string $linguaPortale = "it";
 
     public Ente $ente;
 
@@ -17,11 +18,7 @@ abstract class PraticaBase
 
     public Firmatario $firmatario;
 
-    public string $note = "";
-
     public SoggettoRichiedente $soggettoRichiedente;
-
-    public TipoPagamento $tipoPagamento = TipoPagamento::TELEMACO;
 
     public UtenteRichiedente $utenteRichiedente;
 }

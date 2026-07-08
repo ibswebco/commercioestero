@@ -8,7 +8,7 @@ interface CeClientAdapter
 {
     public function login(string $username, string $password): void;
 
-    public function logout(): string;
+    public function logout(): void;
 
     public function tipoPratica(): array|string;
 
@@ -74,6 +74,6 @@ interface CeClientAdapter
         int $pageSize = 3,
         string $query = "",
         string $tipologiaRichiesta = "",
-        bool $viewAllPratcihe = false,
+        bool $viewAllPratiche = false,
     ): array|string;
 }

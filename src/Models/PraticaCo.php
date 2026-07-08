@@ -2,19 +2,17 @@
 
 namespace IBSWebCO\CommercioEstero\Models;
 
+use IBSWebCO\CommercioEstero\Enums\TipoPagamento;
 use IBSWebCO\CommercioEstero\Models\Co\OrigineUe;
 use IBSWebCO\CommercioEstero\Models\Co\Destinatario;
 use IBSWebCO\CommercioEstero\Models\Co\DichiarazioneMerciFatture;
 use IBSWebCO\CommercioEstero\Models\Co\OpzioniCertificato;
 use IBSWebCO\CommercioEstero\Models\Co\OrigineExtraUe;
 use IBSWebCO\CommercioEstero\Models\Co\Speditore;
-use Override;
 
 class PraticaCo extends PraticaBase
 {
-    public string $linguaDocumentoSintesi = "it";
-
-    public string $linguaPortale = "it";
+    public array $certificazioniAllegati = [];
 
     public Speditore $speditore;
 
@@ -40,9 +38,13 @@ class PraticaCo extends PraticaBase
 
     public string $giacenzaMerci = "";
 
+    public string $note = "";
+
     //public bool $selezionaFirmatario = false;
 
     public bool $evasioneAutomatica = false;
 
     public OpzioniCertificato $opzioniCertificato;
+
+    public TipoPagamento $tipoPagamento = TipoPagamento::TELEMACO;
 }

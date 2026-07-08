@@ -4,17 +4,17 @@ namespace IBSWebCO\CommercioEstero\Enums;
 
 enum TipoPratica: string
 {
-    case CO = "co";
+    case CO = "CO";
 
-    case DF = "df";
+    case DF = "DF";
 
-    case CD = "cd";
+    case CD = "CD";
 
-    case DD = "dd";
+    case DD = "DD";
 
-    case RD = "rd";
+    case RD = "RD";
 
-    case VA = "va";
+    case VA = "VA";
 
     public function descrizione(): string
     {
