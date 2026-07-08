@@ -2,6 +2,12 @@
 
 namespace IBSWebCO\CommercioEstero\Models;
 
+/**
+ * @property string $codiceEnte
+ * @property string $cciaaMaster
+ * @property string $codAooProt
+ * @property string $denominazione
+ */
 class Ente
 {
     public string $codiceEnte;

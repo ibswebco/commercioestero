@@ -3,6 +3,7 @@
 namespace IBSWebCO\CommercioEstero;
 
 use IBSWebCO\CommercioEstero\Enums\TipoPratica;
+use IBSWebCO\CommercioEstero\BrowserClient\Exceptions\LoginException;
 
 class CeClient
 {
@@ -15,16 +16,24 @@ class CeClient
         return "v{$this->version}";
     }
 
+    /**
+     * Login al portale Commercio Estero.
+     *
+     * @throws LoginException
+     */
     public function login(string $username, string $password): void
     {
         $this->adapter->login(username: $username, password: $password);
     }
 
-    public function logout(): string
+    public function logout(): void
     {
-        return $this->adapter->logout();
+        $this->adapter->logout();
     }
 
+    /**
+     * Elenco tipologie pratiche per Commercio Estero.
+     */
     public function tipoPratica(): array|string
     {
         return $this->adapter->tipoPratica();
@@ -35,26 +44,45 @@ class CeClient
         return $this->adapter->tipiFileAllegati(codicePratica: $codicePratica);
     }
 
+    /**
+     * Saldo Telemaco per utente.
+     */
     public function saldo(): array|string
     {
         return $this->adapter->saldo();
     }
 
+    /**
+     * Elenco Paesi.
+     */
     public function elencoPaesi(): array|string
     {
         return $this->adapter->elencoPaesi();
     }
 
+    /**
+     * Elenco Camere di commercio.
+     *
+     * @param string $codicePratica tipologia pratica (CO, VA)
+     */
     public function elencoCciaa(string $codicePratica): array|string
     {
         return $this->adapter->elencoCciaa(codicePratica: $codicePratica);
     }
 
+    /**
+     * Elenco Sedi.
+     *
+     * @param string $codiceEnte
+     */
     public function elencoSedi(string $codiceEnte): array|string
     {
         return $this->adapter->elencoSedi(codiceEnte: $codiceEnte);
     }
 
+    /**
+     * Elenco degli speditori per utente collegato.
+     */
     public function speditori(): array|string
     {
         return $this->adapter->speditori();
@@ -72,6 +100,11 @@ class CeClient
         return $this->adapter->firmatari();
     }
 
+    /**
+     * Dettgali pratica.
+     *
+     * @param string $codicePratica
+     */
     public function dettagliPratica(string $codicePratica): array|string
     {
         return $this->adapter->dettagliPratica(codicePratica: $codicePratica);
@@ -152,7 +185,7 @@ class CeClient
         int $pageSize = 3,
         string $query = "",
         string $tipologiaRichiesta = "",
-        bool $viewAllPratcihe = false,
+        bool $viewAllPratiche = false,
     ): array|string {
         return $this->adapter->pratiche(
             archiviate: $archiviate,
@@ -161,7 +194,7 @@ class CeClient
             pageSize: $pageSize,
             query: $query,
             tipologiaRichiesta: $tipologiaRichiesta,
-            viewAllPratcihe: $viewAllPratcihe,
+            viewAllPratiche: $viewAllPratiche,
         );
     }
 }

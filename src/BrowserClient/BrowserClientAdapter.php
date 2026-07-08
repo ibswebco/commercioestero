@@ -31,6 +31,7 @@ class BrowserClientAdapter implements CeClientAdapter
     private array $userAgents = [
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
         "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:152.0) Gecko/20100101 Firefox/152.0",
         "Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0",
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
@@ -39,18 +40,17 @@ class BrowserClientAdapter implements CeClientAdapter
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
     ];
 
+    private ?string $currentUserAgent = null;
+
     public function __construct(private bool $debug = false)
     {
         $this->client = new Client();
 
         $this->browser = new HttpBrowser(HttpClient::create());
+
+        $this->setCurrentUA();
     }
 
-    /**
-     * Login al portale Commercio Estero.
-     *
-     * @throws LoginException
-     */
     public function login(string $username, string $password): void
     {
         if (empty($username) || strlen($username) < 6) {
@@ -133,21 +133,23 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
-    public function logout(): string
+    public function logout(): void
     {
         $this->client->get(
-            uri: "https://login.infocamere.it/eacologin/logout.action?fw=false",
+            uri: "https://praticacdor.infocamere.it/ptco/eacologout", //"https://login.infocamere.it/eacologin/logout.action?fw=false",
             options: [
                 "cookies" => $this->guzzleCookieJar,
+                "allow_redirects" => [
+                    "max" => 10,
+                    "referer" => true,
+                ],
+                "headers" => [
+                    "user-Agent" => $this->currentUserAgent,
+                ],
             ],
         );
-
-        return "ok";
     }
 
-    /**
-     * Elenco tipologie pratiche per Commercio Estero.
-     */
     public function tipoPratica(): array|string
     {
         return $this->callPrivateApi(
@@ -156,9 +158,6 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
-    /**
-     * Saldo Telemaco per utente.
-     */
     public function saldo(): array|string
     {
         return $this->callPrivateApi(
@@ -167,9 +166,6 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
-    /**
-     * Elenco Paesi.
-     */
     public function elencoPaesi(): array|string
     {
         return $this->callPrivateApi(
@@ -194,9 +190,6 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
-    /**
-     * Elenco Camere di commercio.
-     */
     public function elencoCciaa(string $codicePratica = "all"): array|string
     {
         $params =
@@ -210,9 +203,6 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
-    /**
-     * Elenco sedi della Camera di commercio specificata.
-     */
     public function elencoSedi(string $codiceEnte): array|string
     {
         return $this->callPrivateApi(
@@ -277,9 +267,6 @@ class BrowserClientAdapter implements CeClientAdapter
         );
     }
 
-    /**
-     * Elenco degli speditori per utente collegato.
-     */
     public function speditori(): array|string
     {
         return $this->callPrivateApi(
@@ -312,9 +299,6 @@ class BrowserClientAdapter implements CeClientAdapter
         throw new \Exception("Not implemented");
     }
 
-    /**
-     * Dettgali pratica.
-     */
     public function dettagliPratica(string $codicePratica): array|string
     {
         return $this->callPrivateApi(
@@ -398,9 +382,9 @@ class BrowserClientAdapter implements CeClientAdapter
     ): array|string {
         return $this->callPrivateApi(
             method: "post",
-            uriPart: "foegWeb/private/codiceRichiesta=" .
+            uriPart: "foegWeb/private/firmaoffline?codiceRichiesta=" .
                 $codicePratica .
-                '$codiceFiscaleFirmatario=' .
+                "&codiceFiscaleFirmatario=" .
                 $codiceFiscaleFirmatario,
             data: $riepilogo,
         );
@@ -417,8 +401,8 @@ class BrowserClientAdapter implements CeClientAdapter
                 "&tipoRichiesta=" .
                 $tipoPratica->value,
             data: [
-                "codicePratica" => $codicePratica,
-                "tipoPratica" => $tipoPratica->value,
+                "codiceRichiesta" => $codicePratica,
+                "tipoRichiesta" => $tipoPratica->value,
             ],
         );
     }
@@ -430,7 +414,7 @@ class BrowserClientAdapter implements CeClientAdapter
         int $pageSize = 3,
         string $query = "",
         string $tipologiaRichiesta = "",
-        bool $viewAllPratcihe = false,
+        bool $viewAllPratiche = false,
     ): array|string {
         return $this->callPrivateApi(
             method: "post",
@@ -442,7 +426,7 @@ class BrowserClientAdapter implements CeClientAdapter
                 "pageSize" => $pageSize,
                 "query" => $query,
                 "tipologiaRichiesta" => $tipologiaRichiesta,
-                "viewAllPratiche" => $viewAllPratcihe,
+                "viewAllPratiche" => $viewAllPratiche,
             ],
         );
     }
@@ -467,7 +451,7 @@ class BrowserClientAdapter implements CeClientAdapter
                     "headers" => [
                         "Accept" => "application/json, text/plain, */*",
                         "Content-Type" => "application/json; charset=UTF-8",
-                        "User-Agent" => $this->userAgents[$k],
+                        "User-Agent" => $this->currentUserAgent,
                         "Authorization" => "Bearer {$this->bearerToken}",
                         "idToken" => $this->idToken,
                     ],
@@ -503,5 +487,12 @@ class BrowserClientAdapter implements CeClientAdapter
                 code: $e->getCode(),
             );
         }
+    }
+
+    private function setCurrentUA(): void
+    {
+        $k = array_rand($this->userAgents, 1);
+
+        $this->currentUserAgent = $this->userAgents[$k];
     }
 }
