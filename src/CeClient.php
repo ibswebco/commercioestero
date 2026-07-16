@@ -7,7 +7,7 @@ use IBSWebCO\CommercioEstero\BrowserClient\Exceptions\LoginException;
 
 class CeClient
 {
-    protected string $version = "1.0.2";
+    protected string $version = "1.0.3";
 
     public function __construct(private CeClientAdapter $adapter) {}
 

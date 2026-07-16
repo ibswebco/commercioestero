@@ -7,7 +7,7 @@
         "analyse": "vendor/bin/phpstan analyse --memory-limit=1G"
     },
     "type": "library",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "require": {
         "php": "^8.4",
         "guzzlehttp/guzzle": "^7.10",
@@ -21,7 +21,10 @@
     "autoload": {
         "psr-4": {
             "IBSWebCO\\CommercioEstero\\": "src"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     },
     "authors": [
         {

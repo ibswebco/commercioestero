@@ -20,7 +20,7 @@ class BrowserClientAdapter implements CeClientAdapter
 
     protected string $baseUrl = "https://commercioestero.camcom.it/";
 
-    protected string $version = "1.0.2";
+    protected string $version = "1.0.3";
 
     protected string $bearerToken;
 
@@ -44,7 +44,7 @@ class BrowserClientAdapter implements CeClientAdapter
 
     public function __construct(private bool $debug = false)
     {
-        $this->client = new Client();
+        $this->client = new Client(["cookies" => true]);
 
         $this->browser = new HttpBrowser(HttpClient::create());
 
@@ -61,9 +61,16 @@ class BrowserClientAdapter implements CeClientAdapter
             throw new BrowserClientException(message: "Password password");
         }
 
+        [$state, $nonce] = generate_hex_strings(
+            length: 11,
+            quantity: 2,
+            charCase: "lower",
+        );
+
         $this->browser->request(
             method: "GET",
-            uri: "https://login.infocamere.it/eacologin/authorize?response_type=id_token%20token&client_id=ic.foeg.fr&redirect_uri=https://commercioestero.camcom.it&scope=openid%20ic_utente%20ic_account%20ic_codfiscale%20ic_nome%20ic_cognome%20ic_profili%20ic_email%20ic_settore_attivita%20ic_n_pro_cntt%20ic_tipologia_mercato&state=d680290047f&nonce=36cb968f8ec",
+            //uri: "https://login.infocamere.it/eacologin/authorize?response_type=id_token%20token&client_id=ic.foeg.fr&redirect_uri=https://commercioestero.camcom.it&scope=openid%20ic_utente%20ic_account%20ic_codfiscale%20ic_nome%20ic_cognome%20ic_profili%20ic_email%20ic_settore_attivita%20ic_n_pro_cntt%20ic_tipologia_mercato&state=d680290047f&nonce=36cb968f8ec",
+            uri: "https://login.infocamere.it/eacologin/authorize?response_type=id_token%20token&client_id=ic.foeg.fr&redirect_uri=https://commercioestero.camcom.it&scope=openid%20ic_utente%20ic_account%20ic_codfiscale%20ic_nome%20ic_cognome%20ic_profili%20ic_email%20ic_settore_attivita%20ic_n_pro_cntt%20ic_tipologia_mercato&state=$state&nonce=$nonce",
         );
 
         $this->browser->submitForm("Accedi", [
@@ -78,6 +85,8 @@ class BrowserClientAdapter implements CeClientAdapter
                 "userid" => $username,
                 "password" => $password,
             ]);
+
+            $response = $this->browser->getCrawler()->filter("body")->text();
         }
 
         if (str_contains($response, "scadenza")) {
@@ -90,10 +99,6 @@ class BrowserClientAdapter implements CeClientAdapter
 
         if (str_contains($response, "scaduta")) {
             throw new LoginException(message: $response . " (AU04)", code: 4);
-        }
-
-        if (str_contains($response, "scadenza")) {
-            $this->browser->clickLink("OK");
         }
 
         if (str_contains($response, "abilitato")) {
@@ -136,18 +141,16 @@ class BrowserClientAdapter implements CeClientAdapter
     public function logout(): void
     {
         $this->client->get(
-            uri: "https://praticacdor.infocamere.it/ptco/eacologout", //"https://login.infocamere.it/eacologin/logout.action?fw=false",
+            uri: "https://login.infocamere.it/eacologin/logout.action?fw=false",
             options: [
-                "cookies" => $this->guzzleCookieJar,
-                "allow_redirects" => [
-                    "max" => 10,
-                    "referer" => true,
-                ],
+                //"cookies" => $this->guzzleCookieJar,
                 "headers" => [
                     "user-Agent" => $this->currentUserAgent,
                 ],
+                "debug" => $this->debug,
             ],
         );
+        //*$this->browser->clickLink("Logout");
     }
 
     public function tipoPratica(): array|string
@@ -455,7 +458,7 @@ class BrowserClientAdapter implements CeClientAdapter
                         "Authorization" => "Bearer {$this->bearerToken}",
                         "idToken" => $this->idToken,
                     ],
-                    "cookies" => $this->guzzleCookieJar,
+                    //"cookies" => $this->guzzleCookieJar,
                     // 'json' => $data,
                     "body" => base64_encode(json_encode($data)),
                     "debug" => $this->debug,
